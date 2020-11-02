@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <script src="/signalr/hubs"></script>
+
+        <script>
+            var chathub;
+            $(function () {
+                //var connection = $.hubconnection();
+                chatHup=$.connection.chat;
+                //chathub = connection.createHubProxy("chat");
+                chathub.client.receiveMessage = onReceive;
+                //chatHub.on("receiveMessage", onReceive);
+                $.connection.logging=true;
+                //connection.logging = true;
+               // connection.start();
+                connection.hub.start();
+                    //.done(function () {
+                //    console.log("connected is successfully");
+                //}).fail(function () {
+                //    console.log("connected is not successfully");
+                //});
+            });
+            var onReceive = function (msg) {
+                $("#conv").append("<h4>" + msg + "</h4>")
+            }
+                        //var OnSend = function () {
+                        //    var msg = $("#txtMessage").val();
+                        //    chathub.server.sendMessage(msg);
+
+                        //}*@
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chathub;
+        $(function () {
+            chathub = $.connection.chat;
+            chathub.client.receiveMessage =  function (msg) {
+               
+                window.localStorage.item=msg.ItemName;
+        }
+            $.connection.hub.start().done(function () {
+                console.log("connected now");
+                // $("#conv").append("<p>test</p>");
+            });
+            setdata();
+        });
+        function setdata() {
+            var data = window.localStorage.getItem("item");
+
+            $("#conv").append("<p>"+data+"</p>");
+        }
+        //var onReceive = function (msg) {
+        //    $("#conv").append("<p>" + msg + "</p>");
+        //}
+
+    </script>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Shopping", "Index", "Shopping")</li>
+                    <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+                    <li>@Html.ActionLink("Items", "Index", "Item")</li>
+                </ul>
+                @Html.Partial("_ShoppingCart")
+            </div>
+        </div>
+    </div>
+  
+    <div class="container body-content">
+        <div id="conv">here new:</div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

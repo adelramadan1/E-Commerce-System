@@ -1,0 +1,121 @@
+﻿@model ShoppingCartSystem.ViewModels.ItemViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<script>
+    $(document).ready(function () {
+        $("#save").click(function () {
+            var formdata = new FormData();
+            formdata.append("CategoryId", $("#CategoryId").val());
+            formdata.append("CodeNName", $("#CodeNName").val());
+            formdata.append("Name", $("#Name").val());
+            formdata.append("Description", $("#Description").val());
+            formdata.append("Price", $("#Price").val());
+            formdata.append("Image", $("#Image").get(0).files[0]);
+            var catid = $("#CategoryId").val();
+            var Name = $("#CodeNName").val();
+            var CodeNName = $("#CodeNName").val();
+            var des = $("#Description").val();
+            var price = $("#Price").val();
+            var image = $("#Image").get(0).files[0];
+
+            //alert(formdata.get("CategoryId"));
+        $.ajax({
+            async: true,
+            dataType: 'JSON',
+            type: 'POST',
+            processData: false,
+            ContentType: false,
+            url: '/Item/AddItem',
+            data: { "CategoryId":catid, "Name": Name, "CodeNName":CodeNName, "Price":price,"Image":image },
+                success: function (response) {
+                    if (response.Success)
+                    {
+                         alert(response.Message);
+                    alter(formdata)
+                    }
+                   
+                    },
+                    error: function () {
+                        alert("There are some error ")
+                    }
+                });
+        });
+        $("#rest").click(function () {
+              $("#CategoryId").val("");
+             $("#Name").val("");
+             $("#CategoryId").val("");
+             $("#Description").val("");
+             $("#Price").val("");
+        });
+        $("#myform").submit(function (e) {
+          //  e.preventDefault();
+        });
+
+    });
+   
+        function saveItem() {
+            var formdata = new FormData();
+            formdata.append("CategoryId", $("#CategoryId").val());
+            formdata.append("Name", $("#Name").val());
+            formdata.append("CodeNName", $("#CategoryId").val());
+            formdata.append("Description", $("#Description").val());
+            formdata.append("Price", $("#Price").val());
+            formdata.append("Image", $("#Image").get(0).file[0]);
+            $.ajax({
+                    asyn: true,
+                    datatype: 'JSON',
+                    type: 'POST',
+                    url: '/Item/AddItem',
+                    processData: false,
+                    ContentType: false,
+                    data: formdata,
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function () {
+                        alert("There are some error ")
+                    }
+                });
+        }
+  
+</script>
+
+<h2>Index</h2>
+
+<div class="container">
+    <div calss="row">
+        @using (Html.BeginForm("AddItem", "Item", FormMethod.Post ,new { id="myform", enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                @Html.Label("Category Name  :")
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoresList, "value", "Text"), new { @class = "form-control", Id = "CategoryId" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Item  Name :")
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", Id = "Name" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Code Name :")
+                @Html.TextBoxFor(model => model.CodeName, new { @class = "form-control", Id = "CodeNName" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Description :")
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", row = 6, colum = 10, Id = "Description" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Price :")
+                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", Id = "Price" })
+            </div>
+            <div class="form-group">
+                @Html.Label("Upload Image :")
+                @Html.TextBoxFor(model => model.Image, new { @class = "form-control", Type = "file", id = "Image" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success"  />
+                <input type="submit" value="Reset" class="btn btn-primary" id="reset" />
+            </div>
+        }
+    </div>
+    </div>
+

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ShoppingCartSystem.ViewModels.CategoryViewModel>
+    @{
+        ViewBag.Title = "Categories";
+    }
+
+    <h2>Categories</h2>
+
+    <div class="container">
+        <div class="row">
+            <table>
+                <tr>
+                    <th>#ID</th>
+                    <th>CodeName</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var cat in Model)
+                {
+                    <tr>
+                        <td>@cat.Id</td>
+                        <td>@cat.CodeName</td>
+                        <td>@cat.Name</td>
+                        <td>
+                            <input type="button" value="Edit" class="btn btn-primary" />
+                            <input type="button" value="Delet" class="btn btn-danger" />
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>chat Application</title>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+        var chathub;
+        $(function() {
+            chathub = $.connection.chat;
+            chathub.client.recieveMessage = onReceive;
+             $.connection.hub.start();
+        });
+          var onReceive = function (msg) {
+            $("#conv").append("<h4>" + msg + "</h4>")
+        }
+        var OnSend = function () {
+            var msg=$("#txtMessage").val();
+            chathub.server.sendMessage(msg);
+          
+        }
+
+    </script>
+</head>
+
+    <body>
+        <div class="container">
+            <input type="text" id="txtMessage" />
+            <input type="button" value="send" id="btnsend" onclick="OnSend()">
+            <div id="conv">
+                <h4> here your messages</h4>
+            </div>
+        </div>
+
+    </body>
+</html>
+

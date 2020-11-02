@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ShoppingCartSystem.ViewModels.Shopping>
+@{
+    ViewBag.Title = "Index";
+    int counter = 0;
+    Session["count"] = 0;
+
+}
+<script>
+    $(document).ready(function()
+    {
+        var counter = 0;
+        $("#AddToCart").click()
+        {
+            
+             @{ Session["count"]=(int)Session["count"]+1;}
+        }
+       
+    });
+    
+   
+</script>
+<h2>Index</h2>
+<h2>@ViewBag.id   @Session["Counter"] </h2>
+<div class="container">
+    <div class="row">
+        <div class="content col-md-12">
+
+
+            @foreach (var item in Model)
+            {
+                <div class="item col-md-3">
+                    <h4>@item.Name</h4>
+                    <img src="@Url.Content(@item.Imagepath)" class="img img-responisve" alt="@item.Name" />
+
+                    <h5>Price:@item.Price</h5>
+
+                    <a href="/Shopping/AddToCart?ItemId=@item.ItemId" id="AddToCart" class="btn btn-primary">Add Cart</a>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
